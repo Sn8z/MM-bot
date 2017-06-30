@@ -1,1 +1,1 @@
-worker: ruby ./mm-bot.rb
+worker:ruby mm-bot.rb
