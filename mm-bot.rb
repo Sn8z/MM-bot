@@ -9,11 +9,11 @@ end
 
 bot.message(content: '!ping') do |event|
   m = event.respond('Pong!')
-  m.edit "Pong! Time taken: #{Time.now - event.timestamp} seconds."
+  m.edit "Pong! `Time taken: #{Time.now - event.timestamp} seconds.`"
 end
 
 bot.message(content: '!roll') do |event|
-  event.respond("You rolled #{rand(1..100)}!")
+  event.respond("#{event.author.username} rolled #{rand(1..100)}!")
 end
 
 bot.message(content: '!chuck') do |event|
@@ -21,13 +21,17 @@ bot.message(content: '!chuck') do |event|
   event.respond(chuck["value"])
 end
 
+bot.message(content: '!source') do |event|
+  event.respond("https://github.com/Sn8z/MM-bot")
+end
+
 bot.message(content: '!steam') do |event|
   steamJSON = JSON.parse(open("https://steamgaug.es/api/v2").read)
-  steam = "Steam status:\n"
-  steam += "Steam Client is #{getSteamStatus(steamJSON['ISteamClient']['online'])} \n"
+  steam = "**Steam status:**\n"
+  steam += "```Steam Client is #{getSteamStatus(steamJSON['ISteamClient']['online'])} \n"
   steam += "Steam Community is #{getSteamStatus(steamJSON['SteamCommunity']['online'])} \n"
   steam += "Steam Store is #{getSteamStatus(steamJSON['SteamStore']['online'])} \n"
-  steam += "Steam User is #{getSteamStatus(steamJSON['ISteamUser']['online'])}"
+  steam += "Steam User is #{getSteamStatus(steamJSON['ISteamUser']['online'])}```"
   event.respond(steam)
 end
 
