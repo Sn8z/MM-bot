@@ -21,6 +21,11 @@ bot.message(content: '!chuck') do |event|
   event.respond(chuck["value"])
 end
 
+bot.message(content: '!mom') do |event|
+  mom = JSON.parse(open("http://api.yomomma.info").read)
+  event.respond(mom["joke"])
+end
+
 bot.message(content: '!source') do |event|
   event.respond("https://github.com/Sn8z/MM-bot")
 end
