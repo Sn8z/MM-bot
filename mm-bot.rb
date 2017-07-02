@@ -5,7 +5,7 @@ require 'open-uri'
 bot = Discordrb::Commands::CommandBot.new token: ENV["DISCORD_SECRET"], client_id: ENV["DISCORD_CLIENT_ID"], prefix: '!'
 
 bot.message(with_text: '!help') do |event|
-  event.respond 'Ring Poolia!'
+
 end
 
 bot.command :ping do |event|
@@ -38,11 +38,16 @@ bot.command :wolfram do |event, *args|
   query = args.join(' ')
   result = Wolfram.fetch(query)
   hash = Wolfram::HashPresenter.new(result).to_hash
-  hash[:pods].each do |key, value|
-    if(!value[0].empty?)
-      event << "**#{key}**"
-      event << "#{value[0]}"
+  if(hash[:pods].empty?)
+    event.respond("No results")
+  else
+    hash[:pods].each do |key, value|
+      if(!value[0].empty?)
+        event << "**#{key}**"
+        event << "#{value[0]}"
+      end
     end
+    return
   end
 end
 
