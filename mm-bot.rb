@@ -35,8 +35,15 @@ bot.command :mom do |event|
 end
 
 bot.command :wolfram do |event, *args|
-  query = args.join('+')
-  event.respond(open("http://api.wolframalpha.com/v1/result?appid=#{ENV["WOLFRAM_SECRET"]}&i=#{query}").read)
+  query = args.join(' ')
+  result = Wolfram.fetch(query)
+  hash = Wolfram::HashPresenter.new(result).to_hash
+  hash[:pods].each do |key, value|
+    if(!value[0].empty?)
+      event << "**#{key}**"
+      event << "#{value[0]}"
+    end
+  end
 end
 
 bot.command :source do |event|
@@ -61,4 +68,5 @@ def getSteamStatus(code)
   end
 end
 
+Wolfram.appid = ENV["WOLFRAM_SECRET"]
 bot.run
