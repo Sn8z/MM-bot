@@ -109,6 +109,11 @@ bot.command(:gif, min_args: 0, max_args: 1) do |event, word|
   event.respond(response["data"]["image_url"])
 end
 
+bot.command :sloth do |event|
+  response = JSON.parse(open("https://api.giphy.com/v1/gifs/random?api_key=#{ENV["GIPHY_SECRET"]}&tag=sloth").read)
+  event.respond(response["data"]["image_url"])
+end
+
 #Post Github repo url
 bot.command :source do |event|
   event.respond("https://github.com/Sn8z/MM-bot")
