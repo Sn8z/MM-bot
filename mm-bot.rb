@@ -99,6 +99,16 @@ bot.command :wolfram do |event, *args|
   end
 end
 
+#Fetch random GIF from giphy based on word
+bot.command(:gif, min_args: 0, max_args: 1) do |event, word|
+  if word
+    response = JSON.parse(open("https://api.giphy.com/v1/gifs/random?api_key=#{ENV["GIPHY_SECRET"]}&tag=#{word}").read)
+  else
+    response = JSON.parse(open("https://api.giphy.com/v1/gifs/random?api_key=#{ENV["GIPHY_SECRET"]}").read)
+  end
+  event.respond(response["data"]["image_url"])
+end
+
 #Post Github repo url
 bot.command :source do |event|
   event.respond("https://github.com/Sn8z/MM-bot")
