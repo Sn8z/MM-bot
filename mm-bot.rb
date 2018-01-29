@@ -73,6 +73,11 @@ bot.command :source do |event|
   event.respond("https://github.com/Sn8z/MM-bot")
 end
 
+#Post "Farstu" explanation
+bot.commmand :farstu do |event|
+  event.respond("https://sv.wikipedia.org/wiki/Farstu")
+end
+
 #Check the status of the different steam services
 bot.command :steam do |event|
   steamJSON = JSON.parse(open("https://steamgaug.es/api/v2").read)
