@@ -74,7 +74,7 @@ bot.command :source do |event|
 end
 
 #Post "Farstu" explanation
-bot.commmand :farstu do |event|
+bot.command :farstu do |event|
   event.respond("https://sv.wikipedia.org/wiki/Farstu")
 end
 
