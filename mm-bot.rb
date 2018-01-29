@@ -5,6 +5,11 @@ require 'open-uri'
 #Instantiate new CommandBot
 bot = Discordrb::Commands::CommandBot.new token: ENV["DISCORD_SECRET"], client_id: ENV["DISCORD_CLIENT_ID"], prefix: '!'
 
+#print all entries to terminal
+bot.message do |event|
+  puts event.author.username + " --> " + event.content 
+end
+
 #respond to the user with a Pong! and the time it takes
 bot.command :ping do |event|
   m = event.respond('Pong!')
@@ -60,7 +65,12 @@ bot.command(:gif, min_args: 0, max_args: 1) do |event, word|
   else
     response = JSON.parse(open("https://api.giphy.com/v1/gifs/random?api_key=#{ENV["GIPHY_SECRET"]}").read)
   end
-  event.respond(response["data"]["image_url"])
+
+  if response["data"].size > 0
+    event.respond(response["data"]["image_url"])
+  else
+    event.respond("No relevant gif found :(")
+  end
 end
 
 bot.command :sloth do |event|
